@@ -1,15 +1,17 @@
 <template>
   <div class="editor">
-    <editor-header @release-articles="releaseArticles" />
+    <editor-header @release-articles="releaseArticles" /> <!--绑定发布文章的方法-->
     <div class="content m-t-50">
       <el-upload
-        v-show="imgUrl === ''"
+        v-show="imgUrl === ''" 
         class="img-upload m-b-15"
         drag
         action="/imgs/upload"
         :on-success="uploadSuc"
         accept=".jpg, .jpeg, .JPG, .png, .PNG"
-      >
+      > <!--
+        v-show="imgUrl === ''"  已有图片则不显示
+        element上传图片插件-->
         <i class="el-icon-upload"></i>
         <div ref="hiddenUpload">添加题图</div>
       </el-upload>
@@ -68,7 +70,7 @@ export default {
       this.contentText = contentText;
     },
     releaseArticles() {
-      if (parseFloat(this.$route.params.articleId) !== 0) {
+      if (parseFloat(this.$route.params.articleId) !== 0) { //this.$route.params.articleId：尝试从当前路由的参数中获取名为 articleId 的值。
         this.updateArticle();
       } else {
         this.createArticle();

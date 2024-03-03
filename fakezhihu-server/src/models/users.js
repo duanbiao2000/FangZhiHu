@@ -28,5 +28,5 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  return User;
+  return User;  //返回User模型
 };

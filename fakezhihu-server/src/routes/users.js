@@ -1,12 +1,12 @@
-const model = require('../models');
-const { users: User } = model;
+const model = require('../models'); //引入model
+const { users: User } = model; //解构赋值出User
 const _ = require('lodash');
 const utils = require('../lib/utils');
 const { userAttributes } = require('../config/default');
 
-const list = async (ctx, next) => {
+const list = async (ctx, next) => { //list方法(async)
   try {
-    const users = await User.findAll();
+    const users = await User.findAll(); //查询语句
     ctx.response.status = 200;
     ctx.response.body = users;
   } catch (error) {
@@ -14,14 +14,14 @@ const list = async (ctx, next) => {
   }
 }
 
-const createUser = async (ctx, next) => {
-  const { name, pwd, email } = ctx.request.body;
+const createUser = async (ctx, next) => {  //createUser方法
+  const { name, pwd, email } = ctx.request.body;  //获取请求参数
   try {
-    const infoList = await User.findAll({
-      attributes: ['name', 'email']
+    const infoList = await User.findAll({  //获取所有用户数据
+      attributes: ['name', 'email']  //只需用户名和邮箱字段
     });
-    const nameList = _.map(infoList, item => item.dataValues.name);
-    if (_.includes(nameList, name)) {
+    const nameList = _.map(infoList, item => item.dataValues.name);//获取所有的用户名
+    if (_.includes(nameList, name)) {//用户名重复性校验
       // 203 - 非权威性信息
       ctx.response.status = 203;
       ctx.response.body = {
@@ -51,15 +51,15 @@ const createUser = async (ctx, next) => {
 const loginUser = async (ctx, next) => {
   const { name, pwd } = ctx.request.body;
   const where = { name, pwd };
-  const attributes = ['name', 'id', 'email'];
+  const attributes = ['name', 'id', 'email']; //定义查询字段
   try {
     await User.findOne({
-      where, attributes
+      where, attributes //查询参数
     }).then((res) => {
       if (res === null) {
         // 206 Partial Content 服务器已经完成了部分用户的GET请求
         ctx.response.status = 206;
-        ctx.response.body = {
+        ctx.response.body = { //返回提示信息
           msg: '用户名或者密码不对，请修改后重新登录'
         };
         return ;
@@ -78,7 +78,7 @@ const checkLogin = async (ctx, next) => {
   try {
     if (ctx.cookies.get('id')) {
       await User.findOne({
-        where: { id: ctx.cookies.get('id') },
+        where: { id: ctx.cookies.get('id') }, //定义查询条件
         attributes: userAttributes
       }).then((res) => {
         ctx.response.body = {
@@ -97,14 +97,14 @@ const checkLogin = async (ctx, next) => {
 }
 
 const logout = async (ctx, next) => {
-  const cookies = {
+  const cookies = {  //获取Cookies中所有字段的内容
     id: ctx.cookies.get('id'),
     name: ctx.cookies.get('name'),
     email: ctx.cookies.get('email')
   }
   try {
     utils.destroyCookies(ctx, cookies);
-    ctx.response.status = 200;
+    ctx.response.status = 200;  //返回200
   } catch (error) {
     utils.catchError(ctx, error);
   }
@@ -145,7 +145,7 @@ const updateUserInfo = async (ctx, next) => {
 }
 
 module.exports = {
-  "GET /users/list": list,
+  "GET /users/list": list,  //暴露list方法
   "POST /users/create": createUser,
   "POST /users/login": loginUser,
   "GET /users/checkLogin": checkLogin,

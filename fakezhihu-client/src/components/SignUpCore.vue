@@ -35,8 +35,8 @@
           <el-button
             class="submit-btn"
             type="primary"
-            @click="submitForm('registerForm')"
-          >
+            @click="submitForm('registerForm')"  
+          > <!--按钮绑定事件-->
             注册
           </el-button>
         </el-form-item>
@@ -190,16 +190,16 @@ export default {
       await request
         .post("/users/create", {
           name: this.registerForm.name,
-          pwd: md5(this.registerForm.password),
+          pwd: md5(this.registerForm.password), //使用md5加密 pwd参数
           email: this.registerForm.email
         })
         .then(res => {
           // 201-已创建
           if (res.status === 201) {
-            this.$message.success("注册成功");
+            this.$message.success("注册成功");  //注册成功提示
             this.$router.push({ name: "home" });
           } else {
-            this.$message.error(res.data.msg);
+            this.$message.error(res.data.msg);  //注册失败提示
           }
         });
     },
@@ -218,16 +218,16 @@ export default {
           }
         });
     },
-    submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+    submitForm(formName) {  //提交按钮触发方法
+      this.$refs[formName].validate(valid => {  //表单数据验证
         if (valid) {
-          if (this.nowStatus === "register") {
-            this.register();
+          if (this.nowStatus === "register") {  //当前是注册表单
+            this.register();  //调用register方法
           } else {
             this.login();
           }
         } else {
-          this.$message.error("error submit!!!");
+          this.$message.error("error submit!!!");//校验失败提示
           return false;
         }
         return "";

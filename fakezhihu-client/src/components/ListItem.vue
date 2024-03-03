@@ -8,11 +8,11 @@
             params: { id: transtedInfo.id }
           }"
         >
-          {{ transtedInfo.title }}
+          {{ transtedInfo.title }} <!--标题展示-->>
         </router-link>
       </h2>
     </div>
-
+<!--根据关键词判断是否展示作者-->
     <div class="author-info clearfix" v-if="showPart.indexOf('creator') >= 0">
       <router-link
         :to="{
@@ -27,19 +27,19 @@
         </div>
       </router-link>
     </div>
-
+<!--根据关键词判断是否展示支持人数-->
     <div class="vote" v-if="showPart.indexOf('votes') >= 0">
       <span>{{ JSON.parse(item.status.voteUp).length }} 人赞同了该回答</span>
     </div>
 
     <div class="content-wrapper clearfix">
-      <div class="shortCut" v-if="showType === 'excerpt'">
+      <div class="shortCut" v-if="showType === 'excerpt'"> <!--根据showType判断是否展示简介-->
         <div class="cover" v-if="transtedInfo.cover">
           <img :src="transtedInfo.cover" alt="" />
         </div>
         <div class="excerpt">
           <span>
-            <span v-html="item.excerpt"></span>
+            <span v-html="item.excerpt"></span> 
             <el-button
               class="btn-no-padding"
               type="text"
@@ -72,17 +72,17 @@
           @click="showType = 'excerpt'"
         >
           收起
-        </el-button>
+        </el-button> <!--收起全文按钮-->
       </div>
     </div>
-
-    <list-item-actions
+    <!--调用ListItemActions组件-->
+    <list-item-actions 
       v-bind="$attrs"
       v-on="$listeners"
       :type="type"
       :itemId="item.id"
       :status="item.status"
-      :thanks_count="JSON.parse(item.status.thanks).length"
+      :thanks_count="JSON.parse(item.status.thanks).length" 
       :comment_count="commentCount"
       @update-comment-count="updateCommentCount"
       :voteup_count="JSON.parse(item.status.voteUp).length"
@@ -98,7 +98,7 @@ import ListItemActions from "./ListItemActions.vue";
 import request from "@/service";
 
 export default {
-  props: ["item", "showPart", "type"],
+  props: ["item", "showPart", "type"], //item为当前元素主要内容,showPart为展示内容,type为当前内容类型,文章还是回答
   inheritAttrs: false,
   components: { ListItemActions },
   data() {
@@ -120,8 +120,8 @@ export default {
       } else if (this.type === 2 && this.showPart.includes("title")) {
         return {
           id: this.item.question.id,
-          title: this.item.question.title,
-          cover: this.item.thumbnail || ""
+          title: this.item.question.title,  //标题取此回答的问题
+          cover: this.item.thumbnail || ""  //图片取当前回答的默认插图
         };
       }
       return {

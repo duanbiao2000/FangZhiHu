@@ -15,9 +15,9 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
+    path: "/", //定义父路由
     component: Home,
-    children: [
+    children: [ //定义子路由
       {
         path: "",
         component: Main,
@@ -89,7 +89,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: "history",  //用此模式后url上没有#标识
   base: process.env.BASE_URL,
   routes
 });

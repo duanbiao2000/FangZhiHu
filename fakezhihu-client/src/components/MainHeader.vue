@@ -90,7 +90,7 @@ export default {
     async checkLogin() {
       await request.get("/users/checkLogin").then(res => {
         if (res.status === 200) {
-          this.name = res.data.name;
+          this.name = res.data.name;  //将响应数据中的 'name' 字段赋给当前对象的 'name' 属性
           this.avatarUrl = res.data.avatarUrl;
           this.isLogin = true;
         } else {
@@ -102,10 +102,10 @@ export default {
     async logout() {
       await request.post("/users/logout").then(res => {
         if (res.status === 200) {
-          this.$message.success("注销成功");
+          this.$message.success("注销成功");  //尤其是在使用了 Element UI 这样的 UI 库时，this.$message 是一个全局方法，用于在页面上显示消息提示框。这个方法通常用于给用户反馈操作的结果，例如成功、警告或错误信息。
           this.name = "";
           this.avatarUrl = "";
-          this.$router.push({ name: "signup" });
+          this.$router.push({ name: "signup" }); //this.$router 是 Vue Router 实例的引用，它提供了多种方法来控制应用的路由。this.$router.push 是其中的一个方法，用于导航到不同的 URL，并且不会保留当前的路由记录，即不会在浏览器的历史记录中留下痕迹。
         } else {
           this.$message.error("注销失败，请稍后再试");
         }

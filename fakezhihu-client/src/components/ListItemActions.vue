@@ -8,7 +8,7 @@
         type="text"
       >
         <span class="el el-icon-fakezhihu-fire"></span>
-        {{ metrics_area.text }}
+        {{ metrics_area.text }} <!--热度内容-->
       </el-button>
       <el-button
         v-if="showActionItems.indexOf('vote') >= 0"

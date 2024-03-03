@@ -16,10 +16,10 @@ const routes = require('./src/server/routes')
 onerror(app)
 
 // middlewares
-app.use(koaBody({
+app.use(koaBody({ //npm i koaBody -S 增加后端服务对请求体类型(二进制流)的支持
   multipart: true,
-  strict: false,
-  formidable: {
+  strict: false,  //如果为ture,不解析get,head,delete请求
+  formidable: { //设置上传文件大小最大限制,默认2MB,修改为20MB.
     maxFileSize: 20*1024*1024
   }
 }))

@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card class="no-padding m-b-15">
-      <icon-buttons :exists="['question', 'article', 'thinking']" />
+      <icon-buttons :exists="['question', 'article', 'thinking']" /> <!--传入参数-->
       <div class="draft nav-link">
         <a href="#">
           <span class="text">

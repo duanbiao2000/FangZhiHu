@@ -42,8 +42,9 @@ export default {
       isLogin: false
     };
   },
+  //mounted 是一个生命周期钩子，它在组件挂载到 DOM 后被调用。在这个生命周期钩子中，调用了 checkLogin 方法，这是一个异步方法，用于检查用户是否已经登录。
   mounted() {
-    this.checkLogin();
+    this.checkLogin(); //检查是否登录
   },
   methods: {
     async checkLogin() {
